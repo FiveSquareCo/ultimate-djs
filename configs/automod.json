@@ -1,0 +1,80 @@
+{
+    "general": {
+        "working": true,
+        "ignored_users": [],
+        "ignored_channels": [],
+        "ignored_categories": [],
+        "ignored_roles": [],
+        "punishments": [
+            {
+                "strikes": 3,
+                "type": "mute",
+                "duration": 10,
+                "durationType": "minutes"
+            },
+            {
+                "strikes": 5,
+                "type": "mute",
+                "duration": 30,
+                "durationType": "minutes"
+            },
+
+            {
+                "strikes": 7,
+                "type": "mute",
+                "duration": 1,
+                "durationType": "days"
+            },
+
+            {
+                "strikes": 10,
+                "type": "kick"
+            },
+            {
+                "strikes": 13,
+                "type": "ban",
+                "duration": 1,
+                "durationType": "days"
+            },
+            {
+                "strikes": 20,
+                "type": "ban"
+            }
+        ]
+    },
+    "badwords": {
+        "working": true,
+        "ignored_users": [],
+        "ignored_channels": [],
+        "ignored_categories": [],
+        "ignored_roles": [],
+        "blacklisted_words": []
+    },
+    "links": {
+        "working": true,
+        "ignored_users": [],
+        "ignored_channels": [],
+        "ignored_categories": [],
+        "ignored_roles": [],
+        "whitelisted_links": ["tenor.com", "imgur.com", "gfycat.com"]
+    },
+    "mass_mentions": {
+        "working": true,
+        "ignored_users": [],
+        "ignored_channels": [],
+        "ignored_categories": [],
+        "ignored_roles": [],
+        "max_users_mentions": 3,
+        "max_roles_mentions": 3,
+        "max_channels_mentions": 3
+    },
+    "mass_emojis": {
+        "working": true,
+        "ignored_users": [],
+        "ignored_channels": [],
+        "ignored_categories": [],
+        "ignored_roles": [],
+        "max_emojis": 3
+    },
+    "spam": {}
+}
