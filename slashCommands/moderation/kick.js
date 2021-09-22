@@ -13,13 +13,13 @@ module.exports = {
         {
             name: "member",
             type: "USER",
-            description: "The guild member to kick",
+            description: "The @member to kick",
             required: true,
         },
         {
             name: "reason",
             type: "STRING",
-            description: "why you want to kick the member",
+            description: "Reason to kick the user",
             required: false,
         },
     ],

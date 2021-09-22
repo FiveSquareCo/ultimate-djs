@@ -10,6 +10,7 @@
         "ignored_channels": [],
         "ignored_categories": [],
         "ignored_roles": [],
+        "work_only_in_channels": [],
         "levels": [
             {
                 "level": 1,
@@ -32,6 +33,15 @@
             }
         }
     },
+    "voice_ranking": {
+        "working": true,
+        "xp_per_minute": 13,
+        "ignored_users": [],
+        "ignored_channels": [],
+        "ignored_categories": [],
+        "ignored_roles": [],
+        "work_only_in_channels": []
+    },
     "restricted_channels": {
         "working": true,
         "image_ristricted_channels": [],
@@ -41,6 +51,7 @@
     "auto_meme": {
         "working": false,
         "channel_id": "channel_id_here",
+        "sub_reddit": "wholesomememes",
         "interval": 600000
     },
     "join_to_create": {
@@ -76,5 +87,26 @@
         "role_to_ping_on_ticket_create": "351750919580286976",
         "transcripts_channel_id": "885843534937198592",
         "modmail_end_message": "Thank you for contacting us, the ticket is now closed. If you need more help, feel free to send us another message!"
+    },
+    "welcome": {
+        "working": true,
+        "channel_id": "channel_id_here",
+        "message_to_send": "",
+        "dm_message": "NO_DM",
+        "role_to_give": "role_id_here"
+    },
+    "reaction_roles": {
+        "working": true,
+        "remove_role_on_Reaction_remove": true,
+        "roles": {
+            "890158135464042507": {
+                "1_emoji_name/emoji_id": "role_id",
+                "2_emoji_name/emoji_id": "role_id"
+            },
+            "second_message_id": {
+                "1_emoji_name/emoji_id": "role_id",
+                "2_emoji_name/emoji_id": "role_id"
+            }
+        }
     }
 }

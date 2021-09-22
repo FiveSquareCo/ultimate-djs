@@ -8,13 +8,13 @@ const successMessageEmbed = require("../../utils/embeds/sucessEmbed");
 module.exports = {
     name: "delwarn",
     cooldown: 3000,
-    description: "warn a user",
+    description: "Remove a warn of a user.",
     requiredPermission: "MANAGE_MESSAGES",
     options: [
         {
             name: "id",
             type: "STRING",
-            description: "The guild member to kick",
+            description: "The warn id to remove.",
             required: true,
         },
     ],

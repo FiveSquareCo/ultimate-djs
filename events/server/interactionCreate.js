@@ -87,10 +87,11 @@ module.exports = async (client, interaction) => {
                         interaction.user.id
                     }(${interaction.user.username})`
                 );
+                const user = interaction.client.users.cache.get(results.userId);
                 const transcriptsEmbed = new MessageEmbed()
                     .setColor(3092790)
                     .setDescription(
-                        `**Messages count :** ${results.conversation.length}\n **Closed by :** ${interaction.user.tag} - ${interaction.user.id}`
+                        `**Messages count :** ${results.conversation.length}\n**Created by :** ${user.tag} - ${user.id}\n **Closed by :** ${interaction.user.tag} - ${interaction.user.id}`
                     )
                     .setTimestamp()
                     .setAuthor("Ticket closed");

@@ -1,12 +1,13 @@
 const axios = require("axios");
 const { MessageEmbed } = require("discord.js");
 const getRandomUA = require("../../utils/functions/getRandomUA");
+const { sub_reddit } = require("../../configs/features.json").auto_meme;
 
 module.exports = async (client, channelId, interval) => {
     const channel = await client.channels.fetch(channelId);
     setInterval(async () => {
         const { data } = await axios(
-            "https://meme-api.herokuapp.com/gimme/ApexLegendsMemes/3",
+            `https://meme-api.herokuapp.com/gimme/${sub_reddit}/3`,
             {
                 headers: {
                     "User-Agent": getRandomUA(),

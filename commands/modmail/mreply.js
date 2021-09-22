@@ -28,7 +28,9 @@ module.exports = {
                 "This is not a modmail channel/there is no ticket opened in this channel."
             );
         }
-        const user = message.guild.members.cache.get(results.userId);
+        const user =
+            message.guild.members.cache.get(results.userId) ||
+            message.guild.members.fetch(results.userId);
         let messageUpdate = `**${message.author.tag}** -- ${args.join(" ")}`;
 
         if (message.attachments.size > 0) {
@@ -46,7 +48,7 @@ module.exports = {
             },
             { upsert: true }
         );
-        user.send({ content: messageUpdate });
+        user.send({ content: messageUpdate }).catch((e) => null);
         return errorMessageEmbed(message, "Message sent");
     },
 };

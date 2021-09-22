@@ -24,6 +24,6 @@ module.exports = {
         ];
         const answer = answers[Math.floor(Math.random() * answers.length)];
 
-        message.reply(`${user.username}, ${answer}`);
+        message.channel.send(`${user.username}, ${answer}`);
     },
 };

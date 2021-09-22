@@ -2,8 +2,17 @@ const { redis } = require("../../utils/functions/redis");
 const { MessageEmbed } = require("discord.js");
 const { working, join_logs_channel_id } =
     require("../../configs/features.json").mod_logs;
+const { welcome } = require("../../configs/features.json");
 module.exports = async (client, member) => {
     const { id, guild } = member;
+
+    /* Welcome Message/Role */
+    if (welcome.working === true) {
+        if (welcome.role_to_give != "role_id_here") {
+            // const welcomeRole = member.guild.roles.cache.get(welcome.role_to_give) || member;
+            member.roles.add(welcome.role_to_give).catch((e) => null);
+        }
+    }
     /* Mute on rejoin */
     const redisClient = await redis();
     try {
