@@ -41,7 +41,6 @@ module.exports = {
             `Purge Command Deleted Messages ${interaction.guild.name}`,
             `used on ${new Date().toLocaleDateString()}`
         );
-        console.log(messagesLink);
         purgeModlogs(
             interaction,
             interaction.user,
@@ -89,7 +88,7 @@ const purgeModlogs = (
                 value: `${channel.name} - ${channel.id}`,
                 inline: true,
             },
-            { name: "Messages Count", value: `${messageCount}` },
+            { name: "Messages Count", value: `${messageCount}`, inline: true },
             { name: "Messages", value: `${messagesLink}`, inline: true }
         );
     logschannel.send({ embeds: [purgelogsEmbed] });

@@ -33,15 +33,6 @@
             }
         }
     },
-    "voice_ranking": {
-        "working": true,
-        "xp_per_minute": 13,
-        "ignored_users": [],
-        "ignored_channels": [],
-        "ignored_categories": [],
-        "ignored_roles": [],
-        "work_only_in_channels": []
-    },
     "restricted_channels": {
         "working": true,
         "image_ristricted_channels": [],

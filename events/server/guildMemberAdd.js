@@ -5,7 +5,7 @@ const { working, join_logs_channel_id } =
 const { welcome } = require("../../configs/features.json");
 module.exports = async (client, member) => {
     const { id, guild } = member;
-
+    console.log(client.invites);
     /* Welcome Message/Role */
     if (welcome.working === true) {
         if (welcome.role_to_give != "role_id_here") {
@@ -31,6 +31,10 @@ module.exports = async (client, member) => {
     } finally {
         redisClient.quit();
     }
+    /* Invite Logger */
+    member.guild.invites.fetch().then(async (guildInvites) => {
+        const ei = client.invites[``];
+    });
     /* Logs */
     if (working && join_logs_channel_id != "channel_id_here") {
         const date = `<t:${(

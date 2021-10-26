@@ -18,13 +18,13 @@ module.exports = {
         {
             name: "duration",
             type: "NUMBER",
-            description: "The duration fo the mute",
+            description: "Duration of mute",
             required: true,
         },
         {
             name: "type",
             type: "STRING",
-            description: "The duration type of mute duration",
+            description: "Duration type of mute",
             required: true,
             choices: [
                 { name: "minutes", value: "minutes" },
@@ -37,7 +37,7 @@ module.exports = {
         {
             name: "reason",
             type: "STRING",
-            description: "Reason to mute the member",
+            description: "Reason of the mute",
             required: false,
         },
     ],

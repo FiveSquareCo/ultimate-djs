@@ -121,7 +121,7 @@ module.exports = {
             });
         pollModlogs(interaction, interaction.user, channel, role, {
             title,
-            options: description,
+            options: pollOptions,
             link,
         });
 
@@ -146,7 +146,9 @@ const pollModlogs = (interaction, moderator, channel, role, pollData) => {
         .addField("Role Pinged", `${role.name} - ${role.id} - <@&${role.id}>`)
         .addField(
             "Poll Info",
-            `> **Title :** ${pollData.title}\n> **Options :** ${pollData.description}`
+            `> **Title :** ${
+                pollData.title
+            }\n> **Options :** ${pollData.options.join(", ")}`
         )
         .addField("Link", `[click here](${pollData.link})`)
         .setTimestamp();

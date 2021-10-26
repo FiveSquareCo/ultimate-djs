@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const errorMessageEmbed = require("../../utils/embeds/errorEmbed");
+const musicCommandChecks = require("../../utils/functions/musicCommandChecks");
 const {
     suggestions,
     chat_ranking,
@@ -86,7 +87,13 @@ module.exports = async (client, message) => {
                         );
                     }
                 }
-                command.run(message, args, client);
+                if (command.category === "music") {
+                    if (musicCommandChecks(message) === true) {
+                        command.run(message, args, client);
+                    }
+                } else {
+                    command.run(message, args, client);
+                }
                 if (command.cooldown) {
                     client.commandCooldowns.set(
                         `${message.author.id}_${command.name}`,

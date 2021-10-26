@@ -4,12 +4,13 @@ const errorEmbed = require("../../utils/embeds/errorEmbed");
 module.exports = {
     name: "withrole",
     requiredPermission: "MANAGE_ROLES",
-    description: "get members with give role",
+    description:
+        "Lists every person from the specified role on this server (max. 25 users).",
     options: [
         {
             name: "role",
             type: "ROLE",
-            description: "users?",
+            description: "Role to list members of",
             required: true,
         },
     ],

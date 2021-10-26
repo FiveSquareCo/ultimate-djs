@@ -1,19 +1,9 @@
-const {
-    Interaction,
-    MessageEmbed,
-    MessageActionRow,
-    MessageButton,
-} = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const errorMessageEmbed = require("../../utils/embeds/errorEmbed");
 const { modmail_end_message, transcripts_channel_id } =
     require("../../configs/features.json").mod_mail;
 const modmailDB = require("../../schemas/modmailSchema");
 const createBin = require("../../utils/functions/createBin");
-/**
- *
- * @param {*} client
- * @param {Interaction} interaction
- */
 
 module.exports = async (client, interaction) => {
     if (interaction.isCommand()) {
@@ -86,7 +76,7 @@ module.exports = async (client, interaction) => {
                     }, closed on ${new Date().toLocaleDateString()} by ${
                         interaction.user.id
                     }(${interaction.user.username})`
-                );
+                ).catch((e) => null);
                 const user = interaction.client.users.cache.get(results.userId);
                 const transcriptsEmbed = new MessageEmbed()
                     .setColor(3092790)

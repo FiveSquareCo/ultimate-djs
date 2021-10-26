@@ -7,13 +7,13 @@ const generateId = require("../../utils/functions/randomIdGen");
 module.exports = {
     name: "warn",
     cooldown: 3000,
-    description: "warn a user",
+    description: "Warn a member",
     requiredPermission: "MANAGE_MESSAGES",
     options: [
         {
             name: "member",
             type: "USER",
-            description: "The guild member to kick",
+            description: "The @member to warn",
             required: true,
         },
         {

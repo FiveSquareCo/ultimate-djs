@@ -30,7 +30,7 @@ module.exports = {
         }
         const user =
             message.guild.members.cache.get(results.userId) ||
-            message.guild.members.fetch(results.userId);
+            (await message.guild.members.fetch(results.userId));
         let messageUpdate = `**${message.author.tag}** -- ${args.join(" ")}`;
 
         if (message.attachments.size > 0) {

@@ -4,9 +4,9 @@ const successMessageEmbed = require("../../utils/embeds/sucessEmbed");
 
 module.exports = {
     name: "strikes",
-    cooldown: 3000,
+    cooldown: 5000,
     description: "Hello",
-    // requiredPermission: "MANAGE_MESSAGES",
+    requiredPermission: "MANAGE_MESSAGES",
     options: [
         {
             name: "view",

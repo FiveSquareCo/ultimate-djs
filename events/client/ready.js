@@ -3,6 +3,7 @@ const { expire } = require("../../utils/functions/redis");
 const { auto_meme } = require("../../configs/features.json");
 const { status, interval } = require("../../configs/botStatus");
 const { colors, main_guild_id } = require("../../configs/config.json");
+const wait = require("../../utils/functions/sleep");
 module.exports = async (client) => {
     /* Regestring Slash Commands */
     registerSlashCommands(client);
@@ -48,6 +49,13 @@ module.exports = async (client) => {
     };
 
     /* Client Global Variables */
+    client.guilds.cache
+        .get(main_guild_id)
+        .invites.fetch()
+        .then((guildInvites) => {
+            client.invites = guildInvites;
+        });
+    client.prefix = "+";
     client.colors = colors;
     setInterval(randomStatus, interval);
 };
