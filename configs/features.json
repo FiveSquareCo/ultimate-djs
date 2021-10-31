@@ -99,5 +99,10 @@
                 "2_emoji_name/emoji_id": "role_id"
             }
         }
+    },
+    "youtube_notifications": {
+        "working": true,
+        "notification_channel_id": "823590263305666632",
+        "yt_channel_ids": ["UC5lsq641BXdUtomfQBSQNFw"]
     }
 }

@@ -1,9 +1,16 @@
-const { MessageEmbed, Team, User } = require("discord.js");
+const { MessageEmbed, Team } = require("discord.js");
 const { expire } = require("../../utils/functions/redis");
-const { auto_meme } = require("../../configs/features.json");
+const {
+    auto_meme,
+    youtube_notifications,
+} = require("../../configs/features.json");
 const { status, interval } = require("../../configs/botStatus");
-const { colors, main_guild_id } = require("../../configs/config.json");
-const wait = require("../../utils/functions/sleep");
+const { colors } = require("../../configs/config.json");
+const {
+    getLatestVideoAndNotify,
+    registerSlashCommands,
+} = require("../../utils/functions/index");
+const cron = require("node-cron");
 module.exports = async (client) => {
     /* Regestring Slash Commands */
     registerSlashCommands(client);
@@ -49,28 +56,21 @@ module.exports = async (client) => {
     };
 
     /* Client Global Variables */
-    client.guilds.cache
-        .get(main_guild_id)
-        .invites.fetch()
-        .then((guildInvites) => {
-            client.invites = guildInvites;
-        });
     client.prefix = "+";
     client.colors = colors;
     setInterval(randomStatus, interval);
-};
 
-const registerSlashCommands = async (client) => {
-    const slashCommandsArray = [];
-    await client.slashCommands.forEach((command) => {
-        const cmd = {
-            name: command.name,
-            description: command.description || "This is default description.",
-            options: command.options || [],
-        };
-        slashCommandsArray.push(cmd);
+    /* Sheduled Functions */
+    cron.schedule("*/15 * * * *", async () => {
+        if (
+            youtube_notifications.working === true &&
+            youtube_notifications.yt_channel_ids.length != 0 &&
+            youtube_notifications.notification_channel_id != "channel_id_here"
+        ) {
+            await getLatestVideoAndNotify(
+                youtube_notifications.yt_channel_ids,
+                client
+            );
+        }
     });
-    const guild = client.guilds.cache.get(main_guild_id);
-
-    await guild.commands.set(slashCommandsArray);
 };
