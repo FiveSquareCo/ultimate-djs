@@ -14,7 +14,7 @@ module.exports = {
             player.resume(message);
             const resumedMusicEmbed = new MessageEmbed()
                 .setColor(3092790)
-                .setDescription("Resumed The Music!");
+                .setDescription("Resumed the music!");
             return message.channel.send({ embeds: [resumedMusicEmbed] });
         }
         if (!args.length) {

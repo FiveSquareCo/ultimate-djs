@@ -1,4 +1,4 @@
-const noplayersEmbed = require("../../utils/embeds/noPlayersEmbed");
+const { noMusicAroundYouEmbed, errorEmbed } = require("../../utils/embeds");
 const { MessageEmbed } = require("discord.js");
 module.exports = {
     name: "skip",
@@ -9,7 +9,14 @@ module.exports = {
         const player = message.client.player;
         const queue = player.getQueue(message);
         if (!queue) {
-            return noplayersEmbed(message);
+            return noMusicAroundYouEmbed(message);
+        }
+        if (queue.songs.length <= 1) {
+            message.react("❌");
+            return errorEmbed(
+                message,
+                ":x: There are no songs in queue to skip, please play some songs and then skip."
+            );
         }
         message.react("⏭️");
         player.skip(message);

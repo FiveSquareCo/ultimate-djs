@@ -5,19 +5,19 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     name: "unmute",
     cooldown: 3000,
-    description: "Mute",
+    description: "Unmute a muted member in server",
     requiredPermission: "MANAGE_ROLES",
     options: [
         {
             name: "member",
             type: "USER",
-            description: "The guild member to kick",
+            description: "The @member to unmute",
             required: true,
         },
         {
             name: "reason",
             type: "STRING",
-            description: "Time",
+            description: "Reason for unmute",
             required: true,
         },
     ],

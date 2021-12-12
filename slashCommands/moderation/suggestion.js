@@ -8,19 +8,19 @@ const { working: suggWorking, channel_id } =
     require("../../configs/features.json").suggestions;
 module.exports = {
     name: "suggestion",
-    description: "suggestions",
+    description: "Reply to a suggestion in server",
     requiredPermission: "MANAGE_CHANNELS",
     options: [
         {
             name: "suggestion",
             type: "STRING",
-            description: "Test",
+            description: "Message id of the suggestion",
             required: true,
         },
         {
             name: "status",
             type: "STRING",
-            description: "ello",
+            description: "Stats of suggestion to set",
             choices: [
                 {
                     name: "Accept",
@@ -35,7 +35,7 @@ module.exports = {
         },
         {
             name: "reason",
-            description: "Hi",
+            description: "Reason for setting the particular status",
             type: "STRING",
             required: true,
         },

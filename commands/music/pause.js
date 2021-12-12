@@ -24,7 +24,9 @@ module.exports = {
         player.pause(message);
         const pausedMusicEmbed = new MessageEmbed()
             .setColor(3092790)
-            .setDescription("Paused The Music!");
+            .setDescription(
+                `Paused the music at [${queue.formattedCurrentTime}](${queue.songs[0].url})`
+            );
         message.channel.send({ embeds: [pausedMusicEmbed] });
     },
 };

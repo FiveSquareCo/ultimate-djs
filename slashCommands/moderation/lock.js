@@ -5,25 +5,25 @@ const { working, commands_logs_channel_id } =
 module.exports = {
     name: "lock",
     cooldown: 3000,
-    description: "lock a channel",
+    description: "Lock the channel to prevent everyone from talking",
     requiredPermission: "MANAGE_CHANNELS",
     options: [
         {
             name: "channel",
             type: "CHANNEL",
-            description: "The Input",
+            description: "Channel to lock",
             required: false,
         },
         {
             name: "role",
             type: "ROLE",
-            description: "Hoi",
+            description: "Specfic role to lock the channel",
             required: false,
         },
         {
             name: "reason",
             type: "STRING",
-            description: "Hiii",
+            description: "Reason to lock the channel",
             required: false,
         },
     ],

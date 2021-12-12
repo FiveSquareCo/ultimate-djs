@@ -51,5 +51,6 @@ const { Client, Intents, Collection } = require("discord.js");
     //     console.log(" [antiCrash] :: Multiple Resolves");
     //     //console.log(type, promise, reason);
     // });
+    // process.on("")
     FSXClient.login(process.env.DISCORD_TOKEN);
 })();

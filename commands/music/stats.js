@@ -22,8 +22,6 @@ module.exports = {
                     currentSong.views
                 }\n:small_blue_diamond: **Likes :** ${
                     currentSong.likes
-                }\n:small_blue_diamond: **Dislikes :** ${
-                    currentSong.dislikes
                 }\n:small_blue_diamond: **Duration :** ${
                     currentSong.formattedDuration
                 }\n:small_blue_diamond: **Publisher :** [${
