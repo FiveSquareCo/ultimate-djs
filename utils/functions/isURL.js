@@ -1,3 +1,3 @@
 module.exports = (link) => {
-    return link.match(/(https|http)(:\/\/)(\S)+/g) ? true : false;
+    return link.match(/(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-&?=%.]+/) ? true : false;
 };

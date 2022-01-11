@@ -2,14 +2,12 @@ const errorMessageEmbed = require("../../utils/embeds/errorEmbed");
 const sucessMessageEmbed = require("../../utils/embeds/sucessEmbed");
 const { suggestionsStatusMessages } = require("../../configs/constants.json");
 const { MessageEmbed } = require("discord.js");
-const { working, commands_logs_channel_id } =
-    require("../../configs/features.json").mod_logs;
-const { working: suggWorking, channel_id } =
-    require("../../configs/features.json").suggestions;
+const { working, commands_logs_channel_id } = require("../../configs/features.json").mod_logs;
+const { working: suggWorking, channel_id } = require("../../configs/features.json").suggestions;
 module.exports = {
     name: "suggestion",
     description: "Reply to a suggestion in server",
-    requiredPermission: "MANAGE_CHANNELS",
+    requiredPermission: ["MANAGE_CHANNELS"],
     options: [
         {
             name: "suggestion",
@@ -42,10 +40,7 @@ module.exports = {
     ],
     run: async (interaction, args) => {
         if (!suggWorking) {
-            return errorMessageEmbed(
-                interaction,
-                "This command/feature is Disabled"
-            );
+            return errorMessageEmbed(interaction, "This command/feature is Disabled");
         }
         const suggestionMessageId = args.get("suggestion").value;
         const status = args.get("status");
@@ -53,23 +48,11 @@ module.exports = {
         const reason = args.get("reason").value;
         const channel = interaction.guild.channels.cache.get(channel_id);
         if (!channel) {
-            return errorMessageEmbed(
-                interaction,
-                "There is no suggestion channel exits! contact bot maker to change settings.",
-                "SC"
-            );
+            return errorMessageEmbed(interaction, "There is no suggestion channel exits! contact bot maker to change settings.", "SC");
         }
-        const message = await channel.messages.fetch(
-            suggestionMessageId,
-            false,
-            true
-        );
+        const message = await channel.messages.fetch(suggestionMessageId, false, true);
         if (!message) {
-            return errorMessageEmbed(
-                interaction,
-                "The suggestion with given id doesnot exists.",
-                "SC"
-            );
+            return errorMessageEmbed(interaction, "The suggestion with given id doesnot exists.", "SC");
         }
         const link = `https://discord.com/channels/${interaction.guild.id}/${channel.id}/${suggestionMessageId}`;
         const oldEmbed = message.embeds[0];
@@ -79,8 +62,7 @@ module.exports = {
         } else {
             id = oldEmbed.footer.text.replace("Last reply on", "").trim();
         }
-        const suggStatus =
-            status.value === "ACCEPTED" ? "Accepted" : "Rejected";
+        const suggStatus = status.value === "ACCEPTED" ? "Accepted" : "Rejected";
         const embed = new MessageEmbed()
             .setColor(newStatus.color)
             .setDescription(oldEmbed.description)
@@ -88,22 +70,12 @@ module.exports = {
             .setTimestamp()
             .setAuthor(oldEmbed.author.name, oldEmbed.author.iconURL)
             .setTitle(`Suggestion ${suggStatus}`)
-            .addFields(
-                { name: "Status", value: newStatus.text },
-                { name: `Reason from ${interaction.user.tag}`, value: reason }
-            );
+            .addFields({ name: "Status", value: newStatus.text }, { name: `Reason from ${interaction.user.tag}`, value: reason });
         message.edit({ embeds: [embed] }).then((m) => {
             message.reactions.removeAll();
         });
         const user = await interaction.client.users.fetch(id);
-        const dmEmbed = new MessageEmbed()
-            .setColor(newStatus.color)
-            .setDescription(
-                `Your suggestion in **${interaction.guild.name}** has been ${suggStatus}.`
-            )
-            .addField("Your Suggestion", oldEmbed.description, true)
-            .addField("Reason", reason, true)
-            .setFooter("Thanks for your suggestion");
+        const dmEmbed = new MessageEmbed().setColor(newStatus.color).setDescription(`Your suggestion in **${interaction.guild.name}** has been ${suggStatus}.`).addField("Your Suggestion", oldEmbed.description, true).addField("Reason", reason, true).setFooter("Thanks for your suggestion");
         user.send({ embeds: [dmEmbed] });
         suggestionModlogEbed(
             interaction,
@@ -116,38 +88,22 @@ module.exports = {
             },
             link
         );
-        return sucessMessageEmbed(
-            interaction,
-            `Replied for the [suggestion](${link}) by **${oldEmbed.author.name}**`
-        );
+        return sucessMessageEmbed(interaction, `Replied for the [suggestion](${link}) by **${oldEmbed.author.name}**`);
     },
 };
 
-const suggestionModlogEbed = (
-    interaction,
-    moderator,
-    member,
-    suggestion,
-    link
-) => {
+const suggestionModlogEbed = (interaction, moderator, member, suggestion, link) => {
     if (!working || commands_logs_channel_id === "channel_id_here") return;
-    const channel = interaction.guild.channels.cache.get(
-        commands_logs_channel_id
-    );
+    const channel = interaction.guild.channels.cache.get(commands_logs_channel_id);
     const date = `<t:${(new Date() / 1000).toFixed()}:R>`;
     const suggestionlogEmbed = new MessageEmbed()
         .setAuthor("Mod logs")
         .setColor(3092790)
         .setTimestamp()
-        .setDescription(
-            `${moderator.tag} replied to suggestion by ${member.tag} on ${date}`
-        )
+        .setDescription(`${moderator.tag} replied to suggestion by ${member.tag} on ${date}`)
         .addField("Moderator", `${moderator.tag} - ${moderator.id}`, true)
         .addField("Suggester", `${member.tag} - ${member.id}`, true)
-        .addField(
-            "Suggestion",
-            `> **Suggestion :** ${suggestion.sugg}\n> **Status :**${suggestion.status}\n> **Reason :** ${suggestion.reason}`
-        )
+        .addField("Suggestion", `> **Suggestion :** ${suggestion.sugg}\n> **Status :**${suggestion.status}\n> **Reason :** ${suggestion.reason}`)
         .addField("Link", `[click here](${link})`);
     channel.send({ embeds: [suggestionlogEmbed] });
 };

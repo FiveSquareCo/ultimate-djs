@@ -5,10 +5,15 @@ const reqString = {
     required: true,
 };
 
+const reqNumber = {
+    type: Number,
+    required: true,
+};
+
 const afkSchema = mongoose.Schema({
     guildId: reqString,
     userId: reqString,
     reason: reqString,
-    time: reqString,
+    time: reqNumber,
 });
 module.exports = mongoose.model("afks", afkSchema);

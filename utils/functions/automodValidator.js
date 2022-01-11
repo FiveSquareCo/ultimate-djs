@@ -1,12 +1,5 @@
-const {
-    badwords,
-    links: linksMod,
-    mass_mentions,
-    mass_emojis,
-    general,
-} = require("../../configs/automod.json");
-const { automod_logs_channel_id, working } =
-    require("../../configs/features.json").mod_logs;
+const { badwords, links: linksMod, mass_mentions, mass_emojis, general } = require("../../configs/automod.json");
+const { automod_logs_channel_id, working } = require("../../configs/features.json").mod_logs;
 const badWordsList = require("../../configs/badwords.json");
 const automodError = require("../../utils/embeds/automodVoilate");
 const isURL = require("./isURL");
@@ -38,15 +31,7 @@ const badwordsAutomod = (message) => {
         bwl = badWordsList;
     }
     if (badwords.working) {
-        if (
-            automodChecker(
-                message,
-                badwords.ignored_users,
-                badwords.ignored_roles,
-                badwords.ignored_channels,
-                badwords.ignored_categories
-            )
-        ) {
+        if (automodChecker(message, badwords.ignored_users, badwords.ignored_roles, badwords.ignored_channels, badwords.ignored_categories)) {
             return;
         }
         let badwordThings = {
@@ -60,10 +45,7 @@ const badwordsAutomod = (message) => {
             }
         });
         if (badwordThings.usedOrNo) {
-            automodError(
-                message,
-                `**${message.member.user.tag}** Don't use badwords!`
-            );
+            automodError(message, `**${message.member.user.tag}** Don't use badwords!`);
             automodLogsGenerator(message, {
                 name: "badwords",
                 wordUsed: badwordThings.wordUsed,
@@ -76,15 +58,7 @@ const badwordsAutomod = (message) => {
 };
 
 const linksAutomod = (message) => {
-    if (
-        automodChecker(
-            message,
-            linksMod.ignored_users,
-            linksMod.ignored_roles,
-            linksMod.ignored_channels,
-            linksMod.ignored_categories
-        )
-    ) {
+    if (automodChecker(message, linksMod.ignored_users, linksMod.ignored_roles, linksMod.ignored_channels, linksMod.ignored_categories)) {
         return;
     }
     let link = {
@@ -99,10 +73,7 @@ const linksAutomod = (message) => {
             }
         });
         if (!link.usedOrNo) {
-            automodError(
-                message,
-                `**${message.member.user.tag}** Don't send links here!`
-            );
+            automodError(message, `**${message.member.user.tag}** Don't send links here!`);
             automodLogsGenerator(message, {
                 name: "links",
                 linkUsed: link.linkUsed,
@@ -115,29 +86,14 @@ const linksAutomod = (message) => {
 };
 
 const massmentionAutomod = async (message) => {
-    if (
-        automodChecker(
-            message,
-            mass_mentions.ignored_users,
-            mass_mentions.ignored_roles,
-            mass_mentions.ignored_channels,
-            mass_mentions.ignored_categories
-        )
-    ) {
+    if (automodChecker(message, mass_mentions.ignored_users, mass_mentions.ignored_roles, mass_mentions.ignored_channels, mass_mentions.ignored_categories)) {
         return;
     }
     const userMentions = message.mentions.users;
     const roleMentions = message.mentions.roles;
     const channelMentions = message.mentions.channels;
-    if (
-        userMentions.size > mass_mentions.max_users_mentions ||
-        roleMentions.size > mass_mentions.max_roles_mentions ||
-        channelMentions.size > mass_mentions.max_channels_mentions
-    ) {
-        automodError(
-            message,
-            `**${message.member.user.tag}** Don't mention more than ${mass_mentions.max_users_mentions} Users/Roles/Channels.`
-        );
+    if (userMentions.size > mass_mentions.max_users_mentions || roleMentions.size > mass_mentions.max_roles_mentions || channelMentions.size > mass_mentions.max_channels_mentions) {
+        automodError(message, `**${message.member.user.tag}** Don't mention more than ${mass_mentions.max_users_mentions} Users/Roles/Channels.`);
         if (message.content.length > 50) {
             const cont = await createBin(message.content, "", "");
             automodLogsGenerator(message, {
@@ -158,25 +114,14 @@ const massmentionAutomod = async (message) => {
 };
 
 const massemojiAutomod = (message) => {
-    if (
-        automodChecker(
-            message,
-            mass_emojis.ignored_users,
-            mass_emojis.ignored_roles,
-            mass_emojis.ignored_channels,
-            mass_emojis.ignored_categories
-        )
-    ) {
+    if (automodChecker(message, mass_emojis.ignored_users, mass_emojis.ignored_roles, mass_emojis.ignored_channels, mass_emojis.ignored_categories)) {
         return;
     }
     const aa = message.content.match(/<:.+?:\d+>/g) || [];
     const na = message.content.match(/<a:.+?:\d+>/g) || [];
     const emojisArray = [...aa, ...na];
     if (emojisArray.length > mass_emojis.max_emojis) {
-        automodError(
-            message,
-            `**${message.member.user.tag}** Don't send more than ${mass_emojis.max_emojis} in one message.`
-        );
+        automodError(message, `**${message.member.user.tag}** Don't send more than ${mass_emojis.max_emojis} in one message.`);
         automodLogsGenerator(message, {
             name: "mass emoji",
             emojisLen: emojisArray.length,
@@ -192,15 +137,7 @@ const capitalLettersAutomod = (str) => {
 };
 
 const generalAutomod = (message) => {
-    if (
-        automodChecker(
-            message,
-            general.ignored_users,
-            general.ignored_roles,
-            general.ignored_channels,
-            general.ignored_categories
-        )
-    ) {
+    if (automodChecker(message, general.ignored_users, general.ignored_roles, general.ignored_channels, general.ignored_categories)) {
         return true;
     }
 };
@@ -250,55 +187,24 @@ const dbChecker = async (message) => {
 
 const automodLogsGenerator = (message, automod) => {
     if (working && automod_logs_channel_id != "channel_id_here") {
-        const channel = message.client.channels.cache.get(
-            automod_logs_channel_id
-        );
-        const date = `<t:${(
-            new Date(message.createdTimestamp) / 1000
-        ).toFixed()}:R>`;
-        const embed = new MessageEmbed()
-            .setAuthor("Automod Logs")
-            .setColor(3092790)
-            .setDescription(
-                `${message.author.tag} violated ${automod.name} at ${date}`
-            )
-            .setTimestamp()
-            .addField("User", `${message.author.tag} - ${message.author.id}`);
+        const channel = message.client.channels.cache.get(automod_logs_channel_id);
+        const date = `<t:${(new Date(message.createdTimestamp) / 1000).toFixed()}:R>`;
+        const embed = new MessageEmbed().setAuthor("Automod Logs").setColor(3092790).setDescription(`${message.author.tag} violated ${automod.name} at ${date}`).setTimestamp().addField("User", `${message.author.tag} - ${message.author.id}`);
         switch (automod.name) {
             case "badwords":
-                embed.addField(
-                    "Automod",
-                    firstLetterCapital(automod.wordUsed),
-                    true
-                );
+                embed.addField("Automod", firstLetterCapital(automod.wordUsed), true);
                 embed.addField("Word used", automod.wordUsed, true);
                 break;
             case "links":
-                embed.addField(
-                    "Automod",
-                    firstLetterCapital(automod.name),
-                    true
-                );
-                embed.addField(
-                    "Link used",
-                    `${message.content.match(/(https|http)(:\/\/)(\S)+/g)[0]}`,
-                    true
-                );
+                embed.addField("Automod", firstLetterCapital(automod.name), true);
+                embed.addField("Link used", `${message.content.match(/(https|http)(:\/\/)(\S)+/g)[0]}`, true);
                 break;
             case "mass mention":
-                embed.addField(
-                    "Automod",
-                    firstLetterCapital(automod.name),
-                    true
-                );
+                embed.addField("Automod", firstLetterCapital(automod.name), true);
                 embed.addField("Content", automod.content, true);
                 break;
             case "mass emoji":
-                embed.addField(
-                    "Automod",
-                    firstLetterCapital(automod.name),
-                    true
-                );
+                embed.addField("Automod", firstLetterCapital(automod.name), true);
                 embed.addField("Emojis count", `${automod.emojisLen}`, true);
                 break;
         }

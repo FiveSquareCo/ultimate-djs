@@ -1,10 +1,11 @@
 {
     "prefix": "+",
     "main_guild_id": "823590262864347197",
+    "send_data": true,
     "colors": {
-        "SUCCESS": "4437378",
-        "INVISIBLE": "3092790",
-        "ERROR": "",
+        "SUCCESS": 4437378,
+        "INVISIBLE": 3092790,
+        "ERROR": 15548997,
         "CONFUSED": ""
     }
 }

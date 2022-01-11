@@ -1,12 +1,13 @@
 const { redis } = require("../../utils/functions/redis");
 const successMessageEmbed = require("../../utils/embeds/sucessEmbed");
-const { MessageEmbed } = require("discord.js");
+const errorMessageEmbed = require("../../utils/embeds/errorEmbed");
+const { MessageEmbed, CommandInteraction } = require("discord.js");
 
 module.exports = {
     name: "unmute",
     cooldown: 3000,
     description: "Unmute a muted member in server",
-    requiredPermission: "MANAGE_ROLES",
+    requiredPermission: ["MANAGE_ROLES"],
     options: [
         {
             name: "member",
@@ -21,40 +22,21 @@ module.exports = {
             required: true,
         },
     ],
+    /**
+     *
+     * @param {CommandInteraction} interaction
+     * @param {*} args
+     */
     run: async (interaction, args) => {
         const reason = args.get("reason")?.value || "No reason";
-        const { user } = args.get("member");
-        const redisClient = await redis();
-        const member = await interaction.guild.members.fetch(user.id);
-        try {
-            redisClient.get(
-                `muted-${user.id}-${interaction.guild.id}`,
-                (err, result) => {
-                    if (err) {
-                        console.log(err);
-                    } else if (result) {
-                        const role = interaction.guild.roles.cache.find(
-                            (role) => role.name === "Muted"
-                        );
-                        if (role) {
-                            member.roles.remove(role);
-                            successMessageEmbed(
-                                interaction,
-                                `**${user.tag}** has been Unmuted | **Reason:** ${reason}`
-                            );
-                            const unmutedUserEmbed = new MessageEmbed()
-                                .setDescription(
-                                    `You were Unmuted manually in **${interaction.guild.name}** | **Reson :** ${reason}`
-                                )
-                                .setColor(3092790);
-                            user.send({ embeds: [unmutedUserEmbed] });
-                        }
-                    }
-                }
-            );
-            redisClient.del(`muted-${user.id}-${interaction.guild.id}`);
-        } finally {
-            redisClient.quit();
+        const { member } = args.get("member");
+        const isMuted = member.isCommunicationDisabled();
+        if (!isMuted) {
+            return await errorMessageEmbed(interaction, "The mentioned member is not muted/timed out.");
         }
+        member.timeout(null, reason);
+        const userEmbed = new MessageEmbed().setColor(3092790).setDescription(`You were UnMuted in **${interaction.guild.name}** by Moderator |  **reason:** ${reason}`);
+        member.user.send({ embeds: [userEmbed] });
+        return successMessageEmbed(interaction, `**${member.user.tag}** Has been unmuted | **reason:** ${reason}`);
     },
 };

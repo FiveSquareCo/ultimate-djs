@@ -1,7 +1,7 @@
-const { config } = require("dotenv");
+require("dotenv").config();
+const logs = require("discord-logs");
 
 const { Client, Intents, Collection } = require("discord.js");
-
 /* IIFE */
 (async () => {
     // const intents = [
@@ -20,37 +20,20 @@ const { Client, Intents, Collection } = require("discord.js");
         partials: ["CHANNEL", "GUILD_MEMBER", "MESSAGE", "REACTION", "USER"],
     });
 
-    config();
-
+    FSXClient.REDIS_URL = process.env.REDIS_URL;
     FSXClient.messageCommands = new Collection();
     FSXClient.slashCommands = new Collection();
     FSXClient.commandCooldowns = new Collection();
 
-    [
-        "MusicHandler",
-        "CommandHandler",
-        "EventHandler",
-        "DatabaseHandler",
-        "SlashHandler",
-    ].forEach((handler) => {
+    ["MusicHandler", "CommandHandler", "EventHandler", "DatabaseHandler", "SlashHandler"].forEach((handler) => {
         require(`./middleware/${handler}`)(FSXClient);
     });
-    // process.on("unhandledRejection", (reason, p) => {
-    //     console.log(" [antiCrash] :: Unhandled Rejection/Catch");
-    //     // console.log(reason, p);
-    // });
-    // process.on("uncaughtException", (err, origin) => {
-    //     console.log(" [antiCrash] :: Uncaught Exception/Catch");
-    //     // console.log(err, origin);
-    // });
-    // process.on("uncaughtExceptionMonitor", (err, origin) => {
-    //     console.log(" [antiCrash] :: Uncaught Exception/Catch (MONITOR)");
-    //     // console.log(err, origin);
-    // });
-    // process.on("multipleResolves", (type, promise, reason) => {
-    //     console.log(" [antiCrash] :: Multiple Resolves");
-    //     //console.log(type, promise, reason);
-    // });
-    // process.on("")
+
     FSXClient.login(process.env.DISCORD_TOKEN);
+    logs(FSXClient);
+    /* Setup Error Handlers */
+    /* Checking for Redis URL and Redis Features */
+    if (!FSXClient.REDIS_URL || FSXClient.REDIS_URL === "REDIS_CONNECTION_URL_HERE") {
+        console.log("hi");
+    }
 })();

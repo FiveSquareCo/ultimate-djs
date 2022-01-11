@@ -8,7 +8,7 @@ module.exports = {
     name: "warn",
     cooldown: 3000,
     description: "Warn a member",
-    requiredPermission: "MANAGE_MESSAGES",
+    requiredPermission: ["MANAGE_MESSAGES"],
     options: [
         {
             name: "member",
@@ -29,11 +29,7 @@ module.exports = {
         const { user } = args.get("member");
         const userId = user.id;
         if (user.bot || user.id === interaction.user.id) {
-            return errorMessageEmbed(
-                interaction,
-                "You cannot warn this user!",
-                "SC"
-            );
+            return errorMessageEmbed(interaction, "You cannot warn this user!", "SC");
         }
         const warning = {
             id: generateId(13),
@@ -52,15 +48,8 @@ module.exports = {
             },
             { upsert: true, new: true }
         );
-        successMessageEmbed(
-            interaction,
-            `**${user.tag}** has been warned! | **Reason:** ${reason}`
-        );
-        const userEmbed = new MessageEmbed()
-            .setColor(15548997)
-            .setDescription(
-                `You were warned in **${interaction.guild.name}** |  **Reason:** ${reason}`
-            );
+        successMessageEmbed(interaction, `**${user.tag}** has been warned! | **Reason:** ${reason}`);
+        const userEmbed = new MessageEmbed().setColor(15548997).setDescription(`You were warned in **${interaction.guild.name}** |  **Reason:** ${reason}`);
         user.send({ embeds: [userEmbed] }).catch();
     },
 };

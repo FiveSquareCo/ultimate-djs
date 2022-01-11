@@ -13,20 +13,13 @@ module.exports = async (client, queue, song) => {
     }
     const playingSOngEmbed = new MessageEmbed()
         .setTitle(song.name)
-        .setAuthor("Now Playing")
+        .setAuthor({ name: "Now Playing" })
         .setColor(3092790)
         .setThumbnail(song.thumbnail)
-        .setFooter(`Req. By: ${song.user?.tag}`)
+        .setFooter({ text: `Req. By: ${song.user?.tag}` })
         .setTimestamp()
         .setDescription(
-            `[Web Link](${
-                song.url
-            }) | [Support Server](google.com)\n${client.playerStatus(
-                queue,
-                false
-            )}\n\n***Details:***\n:small_blue_diamond: **Publisher  :**  [${
-                song.uploader.name
-            }](${song.uploader.url})\n:small_blue_diamond: **Duration  :**  ${
+            `[Web Link](${song.url}) | [Support Server](google.com)\n${client.playerStatus(queue, false)}\n\n***Details:***\n:small_blue_diamond: **Publisher  :**  [${song.uploader.name}](${song.uploader.url})\n:small_blue_diamond: **Duration  :**  ${
                 song.formattedDuration
             }\n\n****Note:*** *use +stats for more inforamtion of song.*`
         );

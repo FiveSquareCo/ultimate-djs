@@ -55,29 +55,25 @@
         "default_channel_id": "823590263305666632",
         "defalut_ping_role_id": "851710521555681290"
     },
-    "mod_logs": {
-        "working": true,
-        "commands_logs_channel_id": "823590263305666632",
-        "message_delete_logs_channel_id": "823590263305666632",
-        "message_update_logs_channel_id": "channel_id_here",
-        "voice_join_leave_move_logs_channel_id": "channel_id_here",
-        "automod_logs_channel_id": "channel_id_here",
-        "join_to_create_logs_channel_id": "channel_id_here",
-        "channel_create_delete_update_logs_channel_id": "channel_id_here",
-        "nickname_logs_channel_id": "channel_id_here",
-        "join_logs_channel_id": "channel_id_here",
-        "leave_logs_channel_id": "channel_id_here",
-        "role_create_delete_update_logs_channel_id": "channel_id_here",
-        "emojis_stickers_create_update_delete_logs_channel_id": "channel_id_here",
-        "bulk_message_delete_logs_channel_id": "channel_id_here",
-        "server_mute_defean_logs_channel_id": "channel_id_here"
-    },
+
     "mod_mail": {
         "working": true,
         "category_id": "823590263305666630",
         "role_to_ping_on_ticket_create": "351750919580286976",
         "transcripts_channel_id": "885843534937198592",
         "modmail_end_message": "Thank you for contacting us, the ticket is now closed. If you need more help, feel free to send us another message!"
+    },
+    "tickets": {
+        "category_id": "category_id_here",
+        "menu_channel_id": "881463983830347796",
+        "menu": [
+            {
+                "label": "Server Related Issues.",
+                "value": "server_related_issues",
+                "description": "Get help regarding any server related issue.",
+                "emoji": "⚒️"
+            }
+        ]
     },
     "welcome": {
         "working": true,
@@ -104,5 +100,25 @@
         "working": true,
         "notification_channel_id": "823590263305666632",
         "yt_channel_ids": ["UC5lsq641BXdUtomfQBSQNFw"]
+    },
+    "crosspost": {
+        "working": true
+    },
+    "mod_logs": {
+        "working": true,
+        "commands_logs_channel_id": "823590263305666632",
+        "message_delete_logs_channel_id": "823590263305666632",
+        "message_update_logs_channel_id": "channel_id_here",
+        "voice_join_leave_move_logs_channel_id": "channel_id_here",
+        "automod_logs_channel_id": "channel_id_here",
+        "join_to_create_logs_channel_id": "channel_id_here",
+        "channel_create_delete_update_logs_channel_id": "channel_id_here",
+        "nickname_logs_channel_id": "channel_id_here",
+        "join_logs_channel_id": "channel_id_here",
+        "leave_logs_channel_id": "channel_id_here",
+        "role_create_delete_update_logs_channel_id": "channel_id_here",
+        "emojis_stickers_create_update_delete_logs_channel_id": "channel_id_here",
+        "bulk_message_delete_logs_channel_id": "channel_id_here",
+        "server_mute_defean_logs_channel_id": "channel_id_here"
     }
 }

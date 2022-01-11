@@ -1,5 +1,10 @@
+const { Client } = require("discord.js");
 const { main_guild_id } = require("../../configs/config.json");
 
+/**
+ *
+ * @param {Client} client
+ */
 module.exports = async (client) => {
     const slashCommandsArray = [];
     await client.slashCommands.forEach((command) => {
@@ -7,6 +12,7 @@ module.exports = async (client) => {
             name: command.name,
             description: command.description || "This is default description.",
             options: command.options || [],
+            requiredPermission: command.requiredPermission,
         };
         slashCommandsArray.push(cmd);
     });
